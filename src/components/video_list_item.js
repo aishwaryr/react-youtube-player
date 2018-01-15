@@ -1,19 +1,17 @@
-import React from 'react';
+import React from "react";
 
-const VideoListItem = ({video}) => {
+const VideoListItem = ({ video, onVideoSelect }) => {
     // const video = props.video; the curly braces around video abv is doing this
     const imageUrl = video.snippet.thumbnails.default.url;
     console.log(imageUrl);
     return (
-        <li className="list-group-item">
+        <li onClick={() => onVideoSelect(video)} className="list-group-item">
             <div className="video-list media">
                 <div className="media-left">
                     <img className="media-object" src={imageUrl} />
                 </div>
                 <div className="media-body">
-                    <div className="media-heading">
-                        {video.snippet.title}
-                    </div>
+                    <div className="media-heading">{video.snippet.title}</div>
                 </div>
             </div>
         </li>

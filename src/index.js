@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import YTSearch from 'youtube-api-search';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import YTSearch from "youtube-api-search";
 
-import SearchBar from './components/search_bar';
-import VideoList from './components/video_list';
+import SearchBar from "./components/search_bar";
+import VideoList from "./components/video_list";
+import VideoDetail from "./components/video_details";
 
-const API_KEY = 'AIzaSyD4lLVfRzb53Z0dLkfTfw6IrbgwBDOGrRE';
-
+const API_KEY = "AIzaSyD4lLVfRzb53Z0dLkfTfw6IrbgwBDOGrRE";
 
 // Create a new component, This component should produce some HTML
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { videos: [] };
+        this.state = {
+            videos: [],
+            selectedVideo: null
+        };
 
-        YTSearch({key: API_KEY, term: 'Ronaldo'}, (videos) => {
+        YTSearch({ key: API_KEY, term: "pogba" }, videos => {
             console.log(videos);
-            this.setState({ videos });
+            this.setState({
+                videos: videos,
+                selectedVideo: videos[0]
+            });
             // this.setState({ videos: videos }); when key and value are same
         });
     }
@@ -25,10 +31,16 @@ class App extends Component {
         return (
             <div>
                 <SearchBar />
-                <VideoList videos={this.state.videos} />
+                <VideoDetail video={this.state.selectedVideo} />
+                <VideoList
+                    onVideoSelect={selectedVideo =>
+                        this.setState({ selectedVideo })
+                    }
+                    videos={this.state.videos}
+                />
             </div>
         );
     }
 }
 // Take this comp's generated HTML and put it on the Page (DOM)
-ReactDOM.render(<App />, document.querySelector('#main'));
+ReactDOM.render(<App />, document.querySelector("#main"));
