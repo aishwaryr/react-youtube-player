@@ -10,37 +10,35 @@ const API_KEY = "AIzaSyD4lLVfRzb53Z0dLkfTfw6IrbgwBDOGrRE";
 
 // Create a new component, This component should produce some HTML
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            videos: [],
-            selectedVideo: null
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    };
 
-        YTSearch({ key: API_KEY, term: "pogba" }, videos => {
-            console.log(videos);
-            this.setState({
-                videos: videos,
-                selectedVideo: videos[0]
-            });
-            // this.setState({ videos: videos }); when key and value are same
-        });
-    }
+    YTSearch({ key: API_KEY, term: "Modric" }, videos => {
+      console.log(videos);
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      });
+      // this.setState({ videos: videos }); when key and value are same
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                <SearchBar />
-                <VideoDetail video={this.state.selectedVideo} />
-                <VideoList
-                    onVideoSelect={selectedVideo =>
-                        this.setState({ selectedVideo })
-                    }
-                    videos={this.state.videos}
-                />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <SearchBar />
+        <VideoDetail video={this.state.selectedVideo} />
+        <VideoList
+          onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
+          videos={this.state.videos}
+        />
+      </div>
+    );
+  }
 }
 // Take this comp's generated HTML and put it on the Page (DOM)
 ReactDOM.render(<App />, document.querySelector("#main"));
